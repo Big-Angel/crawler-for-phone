@@ -29,10 +29,11 @@ def start():
             patten = re.compile('http://\S*\.baixing\.com/' + i + '/\S*\.html')
             joblist = crawler_list(jobs_url, patten)
             for k in joblist:
-                # #todo
-                s=1
-                # if parsing(crawler_page(k))
-                # record.extend(parsing(crawler_page(k)))
+
+                if parsing(crawler_page(k)):
+                    record.extend(parsing(crawler_page(k)))
+
+    save(record)
 
 
 def parsing(page_source):
