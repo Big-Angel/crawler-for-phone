@@ -16,24 +16,28 @@ def start():
     patten = re.compile('href="(/\S*/m\d*\?src=subCategory)"')
 
     typelist = crawler_list(url + "/gongzuo/?src=topbar", patten)
-
-    # 进入招聘岗位页面
-    j = 1
-    record = []
-    while j < 101:
-        j + 1
+    with open("baixingjob.txt", "w")as f:
         for i in typelist:
-            jobs_url = url + i + "&page=" + j
-            j += 1
-            # 每页工作链接
-            patten = re.compile('http://\S*\.baixing\.com/' + i + '/\S*\.html')
-            joblist = crawler_list(jobs_url, patten)
-            for k in joblist:
-
-                if parsing(crawler_page(k)):
-                    record.extend(parsing(crawler_page(k)))
-
-    save(record)
+            f.write(i)
+            f.write("\n")
+    f.close()
+    # # 进入招聘岗位页面
+    # j = 1
+    # record = []
+    # while j < 101:
+    #     j + 1
+    #     for i in typelist:
+    #         jobs_url = url + i + "&page=" + j
+    #         j += 1
+    #         # 每页工作链接
+    #         patten = re.compile('http://\S*\.baixing\.com/' + i + '/\S*\.html')
+    #         joblist = crawler_list(jobs_url, patten)
+    #         for k in joblist:
+    #
+    #             if parsing(crawler_page(k)):
+    #                 record.extend(parsing(crawler_page(k)))
+    #
+    # save(record)
 
 
 def parsing(page_source):
