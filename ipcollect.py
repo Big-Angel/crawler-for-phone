@@ -1,8 +1,10 @@
 #!/usr/bin/env python
 # -*- coding:utf-8 -*-
 import re
+
 from util.WebRequest import WebRequest
-from util.utilFunction import robustCrawl, getHtmlTree
+from util.utilFunction import getHtmlTree
+
 __author__ = 'Dhyana'
 
 
@@ -127,29 +129,24 @@ class GetFreeProxy(object):
             pass
 
 
-if __name__ == '__main__':
+def ipcollect():
     gg = GetFreeProxy()
-    with open("ip.txt","w")as f:
-        for e in gg.freeProxyFirst():
-            f.write(e)
-            f.write("\n")
+    ip = []
+    for e in gg.freeProxyFirst():
+        ip.append(e)
 
-        for e in gg.freeProxySecond():
-            f.write(e)
-            f.write("\n")
+    for e in gg.freeProxySecond():
+        ip.append(e)
 
-        for e in gg.freeProxyThird():
-            f.write(e)
-            f.write("\n")
+    for e in gg.freeProxyThird():
+        ip.append(e)
 
-        for e in gg.freeProxyFourth():
-            f.write(e)
-            f.write("\n")
+    for e in gg.freeProxyFourth():
+        ip.append(e)
 
-        for e in gg.freeProxyFifth():
-            f.write(e)
-            f.write("\n")
+    for e in gg.freeProxyFifth():
+        ip.append(e)
 
-        for e in gg.freeProxySixth():
-            f.write(e)
-            f.write("\n")
+    for e in gg.freeProxySixth():
+        ip.append(e)
+    return ip
