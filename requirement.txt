@@ -1,9 +1,0 @@
-
-//dl[@class="list-noimg job-list clearfix new-dl"]//a/@post_url
-
-
-
-
-phone = //span[@id="isShowPhoneTop"]/img/@src
-contact = //span[@id="isShowPhoneTop"]/img/em
-content= //span[@class="firm-name"]/a

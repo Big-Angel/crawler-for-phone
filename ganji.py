@@ -1,23 +1,26 @@
 #!/usr/bin/env python
 # -*- coding:utf-8 -*-
-# import crawler
-# import re
-from selenium import webdriver
+import crawler
+from util.userAgent import random_phone
+
 __author__ = 'Dhyana'
 
 
-def start():
-    url='http://bj.ganji.com/zhaopin/'
-    # patten = re.compile('<span id="isShowPhoneTop"\.><img src="(\S)">')
-    # crawler.crawler_list(url,patten)
-    cap = webdriver.DesiredCapabilities.PHANTOMJS
-    cap["phantomjs.page.settings.resourceTimeout"] = 180
-    cap["phantomjs.page.settings.loadImages"] = False
-    driver = webdriver.PhantomJS(executable_path="./phantomjs", desired_capabilities=cap)
-    driver.get(url)
-    with open("ganjijob.txt", "w")as f:
-        for i in driver.find_elements_by_xpath('//div[@class="f-all-news"]//i/a'):
-            if i.get_attribute("href") is not None:
-                    f.write(i.get_attribute("href"))
-                    f.write("\n")
-        f.close()
+def start(q,ip):
+    url = "http://3g.ganji.com/"
+    city_list = []
+    f = open("ganji_url.txt")
+    for line in f:
+        city_list.append(f.readline())
+    f.close()
+    i = 0
+    for j in city_list:
+        urls = crawler.crawler_url(url + j.strip("\n"), '//div[@class="infor"]/div[@class="deliver-area"]/a', 'href', random_phone(),ip)
+        print('ganjiwang'+str(urls))
+        for k in urls:
+            info_list = crawler.crawler_url(k, '//div[@class="comm-area-b"]//td', 'text', random_phone())
+            if len(info_list) == 2:
+                phone = info_list[0]
+                contact = info_list[1]
+                q.put([phone, contact])
+                print('ganjiwang put')

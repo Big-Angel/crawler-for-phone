@@ -1,6 +1,10 @@
 #!/usr/bin/env python
 # -*- coding:utf-8 -*-
+import random
 import re
+import socket
+import threading
+import urllib
 
 from util.WebRequest import WebRequest
 from util.utilFunction import getHtmlTree
@@ -129,24 +133,48 @@ class GetFreeProxy(object):
             pass
 
 
-def ipcollect():
-    gg = GetFreeProxy()
-    ip = []
+def test(i):
+    socket.setdefaulttimeout(5)  # 设置全局超时时间
+    url = "http://china.baixing.com/"  # 打算爬取的网址
+    try:
+        proxy_support = urllib.request.ProxyHandler({'http': i})
+        opener = urllib.request.build_opener(proxy_support)
+        opener.addheaders = [("User-Agent", "Mozilla/5.0 (Windows NT 10.0; WOW64)")]
+        urllib.request.install_opener(opener)
+        res = urllib.request.urlopen(url).read()
+        return i
+    except Exception as e:
+        print(i + ":" + str(e))
+        return None
+
+
+def ipcollect(gg):
+    ip = open('ip.txt','w')
     for e in gg.freeProxyFirst():
-        ip.append(e)
+        if test(e) is not None:
+            ip.write(e)
 
     for e in gg.freeProxySecond():
-        ip.append(e)
+        if test(e) is not None:
+            ip.write(e)
 
     for e in gg.freeProxyThird():
-        ip.append(e)
+        if test(e) is not None:
+            ip.write(e)
 
     for e in gg.freeProxyFourth():
-        ip.append(e)
+        if test(e) is not None:
+            ip.write(e)
 
     for e in gg.freeProxyFifth():
-        ip.append(e)
+        if test(e) is not None:
+            ip.write(e)
 
     for e in gg.freeProxySixth():
-        ip.append(e)
-    return ip
+        if test(e) is not None:
+            ip.write(e)
+    ip.close()
+
+
+def get_ip(ip):
+    return random.choice(ip)
